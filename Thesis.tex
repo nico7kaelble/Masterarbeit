@@ -1,0 +1,149 @@
+\documentclass[12pt,a4paper, twoside, pdftex, cleardoubleempty, pointlessnumbers]{scrbook}
+% 12pt = Grundschrift, Papiergröße, beidseitiger Druck,
+% cleardoubleempty = leere Seite ohne Kopfzeile, pointlessnumbers =
+% Nummerierung ohne Punkt am Schluss
+% !TeX spellcheck = de_DE
+%-----------------------------------------------------------
+%-------------------------- Pakete -------------------------
+
+\usepackage[bottom=30mm, top=30mm, inner=35mm, outer=30mm]{geometry}	%legt Geometrie fest
+\usepackage{ngerman}	%deutsche Rechtschreibung
+%\usepackage[applemac]{inputenc}	%Umlaute für Mac
+%\usepackage[latin1]{inputenc}		%Umlaute für Win
+\usepackage[utf8]{inputenc}		%Umlaute für Linux
+\usepackage{amsmath}			%Zusatzpaket für Formellayout
+\usepackage[version=3]{mhchem}		%für chemische Formeln
+\usepackage[small,hang]{subfigure}	%erlaubt nummerieren von Bilder, hang=hängender Einzug, small=Schriftgröße
+\usepackage{graphicx}			%Einbinden von Bildern
+\usepackage{subfigure}			%erweiterte Darstellungsoptionen für Bilder
+\usepackage[usenames]{color}		%farbiger Text
+\usepackage[labelfont=bf,textfont=normalsize]{caption}
+\renewcommand{\figurename}{Abb. }	%ändert Abbildung in Abb.
+\usepackage{hyperref}			%Inhaltsverzeichnis verlinkt
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{verbatim} 			%für "Computerschrift"
+\usepackage{url}			%für Websites
+\usepackage{parskip}			%Leerzeile statt Einrückung nach einem Absatz
+\usepackage{epstopdf}
+%\usepackage{natbib}
+\addtokomafont{sectioning}{\rmfamily}	%ändert die serifenlose Überschrift in Roman
+
+%-----------------------------------------------------------
+%---------- Einstellungen für Kopf- und Fußzeile -----------
+
+\setlength{\headheight}{15pt}
+\usepackage{fancyhdr}			% Paket für Kopf- und Fußzeile  -  umfangreicher als "scrpage2"
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\renewcommand{\sectionmark}[1]{\markright{\textsl{\thesection \ #1}}}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter \ #1}{}}
+\fancyhf{} 					%löscht Kopf- und Fußzeile 
+\fancyhead[LE,RO]{\thepage}			%\fancyhead[LE,RO]{\bfseries \thepage}
+\fancyhead[RE]{\slshape\leftmark}
+\fancyhead[LO]{\slshape\rightmark}
+
+%-----------------------------------------------------------
+%----------- für Kapitelanfänge etc. leere Seite -----------
+
+\fancypagestyle{plain}{
+		\fancyhead[LE,RO]{\thepage}
+		\fancyhead[RE]{\slshape\leftmark}
+		\fancyhead[LO]{\slshape\rightmark}
+		\fancyfoot{}
+		\renewcommand{\headrulewidth}{0.5pt}
+		\renewcommand{\footrulewidth}{0pt}
+}
+
+%-----------------------------------------------------------
+
+\graphicspath{{Grafiken/}}	
+\DeclareGraphicsExtensions{.png}
+\DeclareGraphicsExtensions{.eps}
+
+%-----------------------------------------------------------
+
+\setlength{\parindent}{0pt}			% Einrücken bei einem Absatz, 0pt => kein Einrücken
+
+%----------------------------------------------------------
+%Trennungsausnahmen (nicht für deutsche Umlaute)
+\hyphenation{Alu-minium}
+\hyphenation{Gleit-ebenen}
+
+%----------------------------------------------------------
+%Neue Befehle definieren
+
+\newcommand{\abb}[1]{(Abb.~\ref{#1})} 		%Abbildungsreferenz: (Abb. <Nr>)
+\newcommand{\abbohne}[1]{Abb.~\ref{#1}} 	%Abbildungsreferenz ohne Klammern: Abb. <Nr>
+\newcommand{\kap}[1]{Kap.~\ref{#1}}		%Kapitelreferenz: Kap. <Nr>
+\newcommand{\kapmit}[1]{(Kap.~\ref{#1})}	%Kapitelreferenz mit Klammern: (Kap. <Nr>)
+\newcommand{\tabelle}[1]{Tabelle~\ref{#1}}	%Referenzierung einer Tabelle: Tabelle <Nr>
+\newcommand{\Gl}[1]{Gl.~(\ref{#1})}		%Referenzierung einer Gleichung: Gl. (<Nr>)
+\newcommand{\Gln}[1]{Gln.~(\ref{#1})}		% für mehrere Gleichungen mit einer gemeinsamen Nummer
+
+% zwei mögliche Definitionen des "entspricht"-Zeichens
+\newcommand{\entspricht}{\mathrel{\widehat{=}}}
+\newcommand{\entsprichtapprox}{\mathrel{\widehat{\approx}}}
+
+%-----------------------------------------------------------
+%------------------------- Dateien -------------------------
+
+\begin{document}
+
+
+\frontmatter
+
+
+		\setcounter{secnumdepth}{3}		% Numerierung bis subsubsection wird dadurch festgelegt
+		\setcounter{tocdepth}{3}		% Gliederung subsubsection wird in Inhaltsverzeichnis eingetragen
+
+		\input{00_1_Titel}
+		\clearpage
+		\input{00_2_Erklaerung}
+		\clearpage
+		\input{00_3_Abstract}
+		\clearpage
+
+		\addtocontents{toc}{}  			% Inhaltsverzeichnis (wird automatisch aus den Chapters und Section erstellt)
+%		\addtocontents{toc}{\protect\thispagestyle{empty}} 		% Keine Kopf-/Fußzeile bei Inhaltsverzeichnis
+		\tableofcontents			% Inhaltsverzeichnis
+
+		\newpage				% nötig um korrekte Seitenzahlen bei mehrseitigem Inhalts-/Abb.verzeichnis
+%		\pagenumbering{Roman}			% römische Seitenzahl für Abbildungsverzeichnis
+%		\setcounter{page}{1}			% Seitenzahlen werden ab Abbildungsverzeichnis durchnummeriert
+		\listoffigures				% Abbildungsverzeichnis
+
+\mainmatter
+
+		\input{01_Einleitung}
+		\input{02_Grundlagen-Forschungsstand}
+		\input{03_Ansatz}
+		\input{04_Implementierung}
+		\input{05_Validierung}
+		\input{06_ZusammenfassungAusblick}
+
+\backmatter
+		%\addtocontents{toc}{\newpage}
+		%\addtocontents{toc}{\protect\thispagestyle{empty}}
+		\appendix
+		%---------------------------------------------------------- 
+		\pagenumbering{Roman}					%Entfernt das "A" vor dem Anhang
+		\setcounter{chapter}{1}	
+		\renewcommand{\thechapter}{\Alph{chapter}}		%setzt alphabetische Numerierung
+
+		\pagestyle{fancy}
+		\renewcommand{\headrulewidth}{.5pt}
+		\renewcommand{\footrulewidth}{0pt}
+		\renewcommand{\sectionmark}[1]{\markright{\textsl{\thesection \ #1}}}
+		\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+		\fancyhf{} 	%löscht Kopf- und Fußzeile
+		\fancyhead[LE,RO]{\thepage}
+		\fancyhead[RE]{\slshape\leftmark}
+		\fancyhead[LO]{\slshape\rightmark}
+		%----------------------------------------------------------
+		\input{0A_Anhang}
+                \addcontentsline{toc}{chapter}{\bibname}%
+		\bibliography{Literaturverzeichnis}{}
+		\bibliographystyle{ThesisBibliographystyle}
+\end{document}
